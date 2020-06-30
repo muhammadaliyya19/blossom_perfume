@@ -1,0 +1,16 @@
+Setting
+1. Autoload
+-helper:url, file, security
+-library:database, email, sesson, form_validation
+
+2. Config
+-base_url:localhost/blossom_parfume
+
+3. Database
+-hostname
+-username
+-password
+-database
+
+4. Routes
+-default_controller

@@ -1,0 +1,11 @@
+1. Transaksi Bibit jadiin pencarian.
+2. Outlet ada halaman detail berisi 
+   - data pegawai, 
+   - nama outlet dan alamat
+   - bibit yang ready disana.
+3. Dibawah dashboard diberi menu untuk detil setiap outlet.
+4. Update pegawai ga mlaku
+5. Data bibit dispesifikan, stok ditiap toko ada berapa.
+6. Untuk pegawai ga bisa action delete / update. Hanya lihat saja.
+7. Data transaksi utk pegawai hanya ditampilkan di hari dia bekerja
+8. Menu Outlet, Pegawai, dan Prediksi disembunyikan.
