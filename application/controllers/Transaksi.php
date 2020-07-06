@@ -6,6 +6,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		public function __construct()
 		{
 			parent::__construct();
+			var_dump($this->session->userdata('user'));
 			$this->load->model('Bibit_model');		
 			$this->load->model('Outlet_model');
 			$this->load->model('Prediksi_model');
@@ -67,7 +68,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 				$id_bibit = $this->input->post('id_bibit', true);
 				$success = $this->Transaksi_model->tambahDataTransaksi();
 				if ($success > 0) {
-					# code...
 					$this->Outlet_model->kurangiStokBibit($id_outlet, $id_bibit);
 					$this->Bibit_model->UpdateStokBibit($id_bibit);				
 					$this->session->set_flashdata('message','<div class="alert alert-success alert-dismissible fade show mt-3" role="alert">Transaksi telah ditambahkan! <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');	

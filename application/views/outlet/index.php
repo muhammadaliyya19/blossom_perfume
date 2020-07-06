@@ -38,7 +38,7 @@
     <!-- BATAS FORM TAMBAH Outlet -->
     <div class="row mt-3">	
     	<div class="col-lg-12">
-	        <table class="table table-hover">
+	        <table class="table table-hover" id="dataTable">
 			  <thead>
 			    <tr>
 			      <th scope="col">No.</th>

@@ -86,5 +86,50 @@ $(function() {
 			}
 		});
 	});	
+
+	$('#doPrediksi').on('click', function() {
+		// var holder_prediksi = document.getElementById("hasilprediksi"); 
+		var opt_bib  = document.getElementById("id_bibit");
+		var nama_bibit = opt_bib.options[opt_bib.selectedIndex].value;
+		var opt_ou  = document.getElementById("id_outlet");
+		var nama_outlet = opt_ou.options[opt_ou.selectedIndex].value;
+		var hasil_prediksi;
+		var alpha = 0.9;
+		var jumlah_aktual;
+		var jumlah_prediksi;
+		var url_;
+		if (nama_outlet == "A") {
+			console.log("A");
+			url_ = 'http://localhost/blossom_parfume/assets/O1_aktual_prediksi.json'
+		}else if(nama_outlet == "B"){
+			console.log("B");
+			url_ = 'http://localhost/blossom_parfume/assets/O2_aktual_prediksi.json'
+		}else if(nama_outlet == "C"){
+			console.log("C");
+			url_ = 'http://localhost/blossom_parfume/assets/O3_aktual_prediksi.json'
+		}
+		$(".nama_parfum").html(nama_bibit);
+		// console.log('Bibit : ' + nama_bibit + ' Outlet : ' + nama_outlet);
+		$.ajax({
+			url: url_,
+			data: { id: nama_bibit },
+			method: 'post',
+			dataType: 'json',
+			success:function(data) {
+				for (var i = 0; i < data.Aktual.length; i++) {
+					if (data.Aktual[i].Nama == nama_bibit) {
+						jumlah_aktual = data.Aktual[i].Mei;
+					}
+				}
+				for (var i = 0; i < data.Prediksi.length; i++) {
+					if (data.Prediksi[i].Nama == nama_bibit) {
+						jumlah_prediksi = data.Prediksi[i].Mei;
+					}
+				}
+				hasil_prediksi = (alpha * jumlah_aktual) + ((1 - alpha) * jumlah_prediksi);
+				$("#hasilprediksi").val(hasil_prediksi);
+			}
+		});
+	});	
 });
 	

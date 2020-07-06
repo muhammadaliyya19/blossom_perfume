@@ -37,7 +37,7 @@
 						 	<label for="role">Outlet</label>
 						    <select class="form-control" id="outlet" name="id_outlet">
 						      	<?php foreach ($outlet as $o):?>
-						      		<?php if($o['id_outlet'] == $pegawai['password']): ?>
+						      		<?php if($o['id_outlet'] == $pegawai['id_outlet']): ?>
 						      			<option value="<?=$o["id_outlet"]?>" selected><?=$o["alamat_outlet"];?></option>
 						      		<?php else: ?>
 						      			<option value="<?=$o["id_outlet"]?>"><?=$o["alamat_outlet"];?></option>

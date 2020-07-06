@@ -7,7 +7,7 @@
     <!-- <div class="row"> -->
     <?php echo $this->session->flashdata('message'); ?>
     <!-- </div>     -->
-    <div class="row mt-3 mb-3">		
+    <div class="row my-2">		
     	<div class="col-lg-4">
     		<h5 class="text-center">Form penjualan</h5>
     		<form action="<?= base_url('transaksi/tambah'); ?>" method="post">
@@ -47,8 +47,8 @@
  				<button type="submit" class="btn btn-primary float-right">Tambah</button>
  			</form>
     	</div>
-    	<div class="col-lg-8">
-	        <table class="table table-hover">
+    	<div class="col-lg-8" style="height: 500px; overflow-y: scroll;">
+	        <table class="table table-hover" id="dataTable">
 			  <thead>
 			    <tr>
 			      <th scope="col">No.</th>
@@ -64,6 +64,21 @@
 			  	  <?php endif; ?>
 			    </tr>
 			  </thead>
+			  <tfoot>
+			    <tr>
+			      <th scope="col">No.</th>
+			      <th scope="col">Bibit</th>
+			      <th scope="col">Jumlah</th>
+			      <th scope="col">@Harga</th>
+			      <th scope="col">Total Harga</th>
+			      <th scope="col">Tgl Transaksi</th>
+			      <th scope="col">Outlet</th>
+			      <th scope="col">Pegawai</th>
+			      <?php if ($_SESSION['user']['jabatan'] == 'Admin'): ?>
+			      	<th scope="col">Action</th>
+			  	  <?php endif; ?>
+			    </tr>
+			  </tfoot>
 			  <tbody>
 					<?php $i = 1;?>
 					    <?php foreach ($transaksi as $t) : ?>
@@ -87,9 +102,14 @@
 						      ?></td>
 						      <td><?php 
 						      	foreach ($pegawai as $p) {
-						      		if ($t['pegawai'] == $p['id']) {
+						      		if ($t['pegawai'] == $p['id'] && $p['jabatan'] != "Admin") {
 						      			echo $p['nama'];
 						      		}
+						      	}
+						      	if ($_SESSION['user']['jabatan'] == "Admin") {
+						      		echo "Admin";
+						      	}else{
+						      		echo "Admin";
 						      	}
 						      ?></td>
 			      			<?php if ($_SESSION['user']['jabatan'] == 'Admin'): ?>

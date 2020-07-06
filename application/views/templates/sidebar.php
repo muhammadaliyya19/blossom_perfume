@@ -66,6 +66,11 @@
             </a>
           </li>
           <li class="nav-item">
+            <a class="nav-link pb-0" href="<?= base_url('pendapatan'); ?>">
+              <i class="fas fa-coins fa-fw text-gray-300"></i><span>Pendapatan</span>
+            </a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link pb-0" href="<?= base_url('prediksi'); ?>">
               <i class="fa fa-line-chart fa-fw text-gray-300"></i><span>Prediksi</span>
             </a>

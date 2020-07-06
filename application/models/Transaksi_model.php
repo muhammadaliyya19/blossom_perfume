@@ -9,7 +9,12 @@
 
 		public function tambahDataTransaksi()
 		{
-			$dataBibit = $this->db->get_where('bibit_outlet' , ['id_bibit' => $this->input->post('id_bibit', true)])->row_array();
+			if ($_SESSION['user']['jabatan'] == "Admin") {
+				$id_outlet = $this->input->post('id_outlet', true);	
+			}else{
+				$id_outlet = $_SESSION['user']['id_outlet'];
+			}
+			$dataBibit = $this->db->get_where('bibit_outlet' , ['id_bibit' => $this->input->post('id_bibit', true), 'id_outlet' => $id_outlet])->row_array();
 			$jumlah_beli = $this->input->post('jumlah', true);
 			if ($dataBibit['stok'] > $jumlah_beli) {
 				date_default_timezone_set("Asia/Jakarta");
@@ -21,7 +26,7 @@
 					"harga_satuan" 		=> $this->input->post('harga_satuan', true),
 					"total_harga"		=> $this->input->post('harga_total', true),
 					"tanggal_transaksi"	=> $now->format('Y-m-d H:i:s'),
-					"outlet"			=> $this->input->post('id_outlet', true),
+					"outlet"			=> $id_outlet,
 					"pegawai"			=> $_SESSION['user']['id']
 					);
 				}else{
@@ -31,7 +36,7 @@
 					"harga_satuan" 		=> $this->input->post('harga_satuan', true),
 					"total_harga"		=> $this->input->post('harga_total', true),
 					"tanggal_transaksi"	=> $now->format('Y-m-d H:i:s'),
-					"outlet"			=> $_SESSION['user']['id_outlet'],
+					"outlet"			=> $id_outlet,
 					"pegawai"			=> $_SESSION['user']['id']
 					);
 				}

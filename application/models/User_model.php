@@ -12,7 +12,7 @@
 			date_default_timezone_set("Asia/Jakarta");
 			$now = new DateTime();
 			$data = array(
-			"username" 		=> $this->input->post('nama', true),
+			"username" 		=> $this->input->post('username', true),
 			"password" 		=> $this->input->post('password', true),
 			"nama" 			=> $this->input->post('nama', true),
 			"jabatan"		=> $this->input->post('jabatan', true),
@@ -47,7 +47,7 @@
 			date_default_timezone_set("Asia/Jakarta");
 			$now = new DateTime();
 			$data = array(
-			"username" 		=> $this->input->post('nama', true),
+			"username" 		=> $this->input->post('username', true),
 			"password" 		=> $this->input->post('password', true),
 			"nama" 			=> $this->input->post('nama', true),
 			"jabatan"		=> $this->input->post('jabatan', true),

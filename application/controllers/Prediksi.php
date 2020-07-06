@@ -6,6 +6,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		public function __construct()
 		{
 			parent::__construct();
+			var_dump($this->session->userdata('user'));
 			$this->load->model('Bibit_model');		
 			$this->load->model('Outlet_model');
 			$this->load->model('Prediksi_model');
@@ -16,11 +17,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 		public function index()
 		{
+			$now = new DateTime();
+			$data['nextmonth']	= $now->format('m') + 1;
 			$data['title'] = 'Prediksi';
 			$data['user'] = $_SESSION['user'];
 			$data['pegawai'] = $this->User_model->getAllUser();			
 			if ($_SESSION['user']['jabatan'] == "Admin") {
 				$data['outlet'] = $this->Outlet_model->getAllOutlet();			
+				$data['bibit'] = $this->Bibit_model->getAllBibit();			
       			// print_r($data['bibit']);
       			// die;
 				$this->load->view('templates/header', $data);

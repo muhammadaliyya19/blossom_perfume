@@ -66,7 +66,7 @@
 
 		public function kurangiStokBibit($id_outlet, $id_bibit)
 		{
-			$this_bo 	= $this->db->get_where('bibit_outlet' , ['id_bibit' => $id_bibit, 'id_outlet => $id_outlet'])->row_array();
+			$this_bo 	= $this->db->get_where('bibit_outlet' , ['id_bibit' => $id_bibit, 'id_outlet' => $id_outlet])->row_array();
 			$pembelian 	= $this->input->post('jumlah', true);
 			$new_stok   = $this_bo['stok'] - $pembelian;
 			$data 		= array(

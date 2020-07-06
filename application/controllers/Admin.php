@@ -6,6 +6,7 @@ class Admin extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
+		var_dump($this->session->userdata('user'));
 		$this->load->model('Bibit_model');		
 		$this->load->model('Outlet_model');
 		$this->load->model('Prediksi_model');
@@ -25,7 +26,7 @@ class Admin extends CI_Controller
 		$data['outlet'] = $this->Outlet_model->getAllOutlet();
 		$data['pegawai'] = $this->User_model->getAllUser();
 		$data['transaksi'] = $this->Transaksi_model->getAllTransaksi();
-		$data['user'] = $_SESSION['user'];
+		$data['user'] = $this->session->userdata('user');
 		$this->load->view('templates/header', $data);
 		$this->load->view('templates/sidebar', $data);
 		$this->load->view('templates/topbar', $data);

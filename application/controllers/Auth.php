@@ -6,7 +6,7 @@ class Auth extends CI_Controller
 
 	public function index()
 	{
-		if (isset($_SESSION['user'])) {
+		if ($this->session->userdata('user') != NULL) {
 			if ($_SESSION['user']['jabatan'] == "Admin") {
 				redirect('admin');
 			}else{
@@ -46,7 +46,7 @@ class Auth extends CI_Controller
 						'id' => $user['id']
 					];
 					// Deklarasi session 'user'
-					$_SESSION['user'] = $data;
+					$this->session->set_userdata('user', $data);
 					// Mengarahkan user ke dashboard admin atau ke dashboard user
 					if ($user['jabatan'] == "Admin") {
 						redirect('admin');
@@ -68,8 +68,6 @@ class Auth extends CI_Controller
 	public function logout()
 	{
 		session_unset(); 
-
-		// destroy the session 
 		session_destroy(); 
 		$this->session->set_flashdata('message','<div class="alert alert-success" role="alert">You have been logout!</div>');
 		redirect('auth');

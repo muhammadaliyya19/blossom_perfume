@@ -55,10 +55,10 @@
     <!-- BATAS FORM TAMBAH BIBIT -->
     <div class="row mt-3">	
 	    <div class="col">	
-	        <table class="table table-hover">
+	        <table class="table table-hover" id="dataTable">
 			  <thead>
 			    <tr>
-			      <th scope="col">Id.</th>
+			      <th scope="col">No.</th>
 			      <th scope="col">Nama</th>
 			      <th scope="col">Stok Total (mL)</th>
 			      <th scope="col">Harga Jual</th>
@@ -71,7 +71,7 @@
 			  </thead>
 			  <tfoot>
 			    <tr>
-			      <th scope="col">Id.</th>
+			      <th scope="col">No.</th>
 			      <th scope="col">Nama</th>
 			      <th scope="col">Stok Total (mL)</th>
 			      <th scope="col">Harga Jual</th>
@@ -83,10 +83,10 @@
 			    </tr>
 			  </tfoot>
 			  <tbody>
-	    		  	<?php if ($user['jabatan']=="Admin"):?>
+	    		  	<?php if ($user['jabatan']=="Admin"): $i = 1; ?>
 					    <?php foreach ($bibit as $b) : ?>
 						    <tr>
-						      <th scope="row"><?=$b['id_bibit']; ?></th>
+						      <th scope="row"><?=$i.'. '; $i++; ?></th>
 						      <td><?php echo $b['nama_bibit']; ?></td>
 						      <td><?php echo $b['Stok_bibit']; ?></td>
 						      <td><?php echo $b['harga_jual']; ?></td>
