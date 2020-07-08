@@ -49,14 +49,15 @@
   <!-- Custom scripts for all pages-->
   <script src="<?= base_url('assets/');?>js/sb-admin-2.min.js"></script>
   <script src="<?php echo base_url(); ?>assets/js/script.js"></script>
-  <script src="<?php echo base_url(); ?>assets/js/barchartscript.js"></script>
+  <script src="<?php echo base_url(); ?>assets/js/piechartscript.js"></script>
+  <script src="<?php echo base_url(); ?>assets/js/linechartscript.js"></script>
   <script src="<?php echo base_url(); ?>assets/js/bootstrap.min.js"></script>
   <script src="<?php echo base_url(); ?>assets/js/jquery-3.4.1.min.js"></script>  
   <script src="https://use.fontawesome.com/8644948b8d.js"></script>
 
-  <script src="<?= base_url('assets/'); ?>vendor/chart.js/Chart.min.js"></script>
+  <!-- <script src="<?= base_url('assets/'); ?>vendor/chart.js/Chart.min.js"></script> -->
   <script src="<?= base_url('assets/'); ?>js/datatables/jquery.dataTables.min.js"></script>
-  <script src="<?= base_url('assets/'); ?>js/demo/chart-bar-demo.js"></script>
+  <!-- <script src="<?= base_url('assets/'); ?>js/demo/chart-bar-demo.js"></script> -->
   <script src="<?= base_url('assets/'); ?>js/datatables/dataTables.bootstrap4.min.js"></script>
   <script src="<?= base_url('assets/'); ?>js/datatables/datatables-demo.js"></script>
   <script src="<?= base_url('assets/'); ?>vendor/datatables/jquery.dataTables.min.js"></script>

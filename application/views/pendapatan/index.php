@@ -28,54 +28,48 @@
     <div class="tab-content">
       <div class="tab-pane active" id="harian">
         <!-- Tabel pendapatan harian - seluruh outlet - seluruh transaksi -->
-        <h5>Grafik Pendapatan Harian</h5>
+        <h5>Grafik Pendapatan Harian Bulan <?= date('M'); ?> Tahun <?= date('Y');?></h5>
         <div class="row">
-            <div class="col-lg-6">
+            <div class="col-lg-12">
               <div class="card">
                 <div class="card-header">
-                  Nanti Grafik Lingkaran Per-Outlet
+                  Line Chart
                 </div>
                 <div class="card-body">
-                  <img src="https://4.bp.blogspot.com/-IErJ0t9JTL0/UvdYtyzTobI/AAAAAAAAABw/I9hSQBC3JyU/s1600/LING.png">
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-6">
-              <div class="card">
-                <div class="card-header">
-                  Nanti Grafik Batang Per-Bibit
-                </div>
-                <div class="card-body">
-                  <img src="https://chartio.com/assets/9bfb20/tutorials/charts/stacked-bar-charts/073137bf11f1c2226f68c3188128e28d66115622dcdecc9bc208a6d4117f53e8/stacked-bar-example-1.png">
+                  <!-- <img src="https://chartio.com/assets/9bfb20/tutorials/charts/stacked-bar-charts/073137bf11f1c2226f68c3188128e28d66115622dcdecc9bc208a6d4117f53e8/stacked-bar-example-1.png"> -->
+                  <div id="chart_daily"></div>
                 </div>
               </div>
             </div>
         </div>
         <div class="row mt-3">
           <div class="col">
-            <h5>Seluruh Transaksi - Seluruh Outlet - Harian</h5>
+            <h5>Tabel Pendapatan Bulan <?= date('M'); ?> Tahun <?= date('Y');?></h5>
             <table class="table table-hover" id="dataTable">
                 <thead>
                     <tr>
                       <th scope="col">No.</th>
-                      <th scope="col">Outlet</th>
                       <th scope="col">Tanggal</th>
-                      <th scope="col">Total Harga Beli Bibit</th>
-                      <th scope="col">Total Harga Jual Bibit</th>
+                      <th scope="col">Jumlah Transaksi</th>
+                      <th scope="col">Akumulasi Harga Beli Bibit</th>
+                      <th scope="col">Akumulasi Harga Jual Bibit</th>
                       <th scope="col">Pendapatan</th>
                       <!-- <th scope="col">Action</th> -->
                     </tr>
                 </thead>
                 <tbody>
                     <?php $i = 1;?>
-                        <?php foreach ($transaksi as $p) : ?>
+                        <?php 
+                          foreach ($transaksiHarian as $th) : 
+                          $date = date_create($th['pertanggal']);
+                        ?>
                           <tr>
                             <th scope="row"><?=$i; ?></th>
-                            <td><?php echo $p['outlet']; ?></td>
-                            <td><?php echo $p['tanggal_transaksi']; ?></td>
-                            <td><?php echo $p['harga_satuan']; ?></td>
-                            <td><?php echo $p['total_harga']; ?></td>
-                            <td><?php echo ($p['total_harga'] - $p['harga_satuan']); ?></td>
+                            <td><?php echo date_format($date,"D / d-m-Y"); ?></td>
+                            <td><?php echo $th['Jumlah_transaksi']; ?></td>
+                            <td><?php echo $th['ahj']; ?></td>
+                            <td><?php echo $th['ahb']; ?></td>
+                            <td><?php echo ($th['pendapatan']); ?></td>
                           </tr>
                       <?php $i++; ?>
                     <?php endforeach; ?>
@@ -87,35 +81,26 @@
         <div class="tab-pane" id="bulanan">
           <h5>Grafik Pendapatan Bulanan Tahun <?= date('Y'); ?></h5>
           <div class="row">
-            <div class="col-lg-6">
+            <div class="col-lg-12">
               <div class="card">
                 <div class="card-header">
-                  Nanti Grafik Lingkaran Per-Outlet
+                  Line Chart
                 </div>
                 <div class="card-body">
-                  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRbjOLj8e4p93Y3Vc9zFsbR0EsTq--Mm06Thw&usqp=CAU">
+                  <!-- <img src="https://chartio.com/assets/9bfb20/tutorials/charts/stacked-bar-charts/073137bf11f1c2226f68c3188128e28d66115622dcdecc9bc208a6d4117f53e8/stacked-bar-example-1.png"> -->
+                  <div id="chart_monthly"></div>
                 </div>
               </div>
-            </div>
-            <div class="col-lg-6">
-              <div class="card">
-                <div class="card-header">
-                  Nanti Grafik Batang Per-Bibit
-                </div>
-                <div class="card-body">
-                  <img src="https://www.perkinselearning.org/sites/elearning.perkinsdev1.org/files/styles/interior_page_image__519x374_/public/Leaves_0.jpg?itok=KoZTXYhD">
-                </div>
-              </div>
-            </div>
+            </div>            
         </div>
-        <div class="row">
+        <div class="row mt-2">
             <div class="col">
-              <table class="table table-hover" id="dataTable">
+              <table class="table table-hover">
                 <thead>
                     <tr>
                       <th scope="col">No.</th>
-                      <th scope="col">Outlet</th>
-                      <th scope="col">Bulan</th>
+                      <th scope="col">Tahun/Bulan</th>
+                      <th scope="col">Jumlah Transaksi</th>
                       <th scope="col">Akumulasi Harga Beli Bibit</th>
                       <th scope="col">Akumulasi Harga Jual Bibit</th>
                       <th scope="col">Pendapatan</th>
@@ -124,14 +109,14 @@
                 </thead>
                 <tbody>
                     <?php $i = 1;?>
-                        <?php foreach ($transaksi as $p) : ?>
+                        <?php foreach ($transaksiBulanan as $tb) : ?>
                           <tr>
                             <th scope="row"><?=$i; ?></th>
-                            <td><?php echo $p['outlet']; ?></td>
-                            <td><?php echo $p['tanggal_transaksi']; ?></td>
-                            <td><?php echo $p['harga_satuan']; ?></td>
-                            <td><?php echo $p['total_harga']; ?></td>
-                            <td><?php echo ($p['total_harga'] - $p['harga_satuan']); ?></td>
+                            <td><?php echo $tb['pertanggal']; ?></td>
+                            <td><?php echo $tb['Jumlah_transaksi']; ?></td>
+                            <td><?php echo $tb['ahj']; ?></td>
+                            <td><?php echo $tb['ahb']; ?></td>
+                            <td><?php echo ($tb['pendapatan']); ?></td>
                           </tr>
                       <?php $i++; ?>
                     <?php endforeach; ?>
@@ -143,23 +128,14 @@
         <div class="tab-pane" id="tahunan">
           <h5>Grafik Pendapatan Tahunan</h5>
           <div class="row">
-            <div class="col-lg-6">
+            <div class="col-lg-12">
               <div class="card">
                 <div class="card-header">
-                  Nanti Grafik Lingkaran Per-Outlet
+                  Line Chart
                 </div>
                 <div class="card-body">
-                  <img src="https://depictdatastudio.com/wp-content/uploads/2015/03/clustered-bar-chart-alternatives_before.jpg">
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-6">
-              <div class="card">
-                <div class="card-header">
-                  Nanti Grafik Batang Per-Bibit
-                </div>
-                <div class="card-body">
-                  <img src="https://www.fusioncharts.com/blog/wp-content/uploads/2013/06/column-intro.png"  style="height: 50%;">
+                  <!-- <img src="https://chartio.com/assets/9bfb20/tutorials/charts/stacked-bar-charts/073137bf11f1c2226f68c3188128e28d66115622dcdecc9bc208a6d4117f53e8/stacked-bar-example-1.png"> -->
+                  <div id="chart_yearly"></div>
                 </div>
               </div>
             </div>
@@ -170,8 +146,8 @@
                 <thead>
                     <tr>
                       <th scope="col">No.</th>
-                      <th scope="col">Outlet</th>
                       <th scope="col">Tahun</th>
+                      <th scope="col">Jumlah Transaksi</th>
                       <th scope="col">Akumulasi Harga Beli Bibit</th>
                       <th scope="col">Akumulasi Harga Jual Bibit</th>
                       <th scope="col">Pendapatan</th>
@@ -180,14 +156,14 @@
                 </thead>
                 <tbody>
                     <?php $i = 1;?>
-                        <?php foreach ($transaksi as $p) : ?>
+                        <?php foreach ($transaksiTahunan as $tt) : ?>
                           <tr>
                             <th scope="row"><?=$i; ?></th>
-                            <td><?php echo $p['outlet']; ?></td>
-                            <td><?php echo $p['tanggal_transaksi']; ?></td>
-                            <td><?php echo $p['harga_satuan']; ?></td>
-                            <td><?php echo $p['total_harga']; ?></td>
-                            <td><?php echo ($p['total_harga'] - $p['harga_satuan']); ?></td>
+                            <td><?php echo $tt['pertanggal']; ?></td>
+                            <td><?php echo $tt['Jumlah_transaksi']; ?></td>
+                            <td><?php echo $tt['ahj']; ?></td>
+                            <td><?php echo $tt['ahb']; ?></td>
+                            <td><?php echo ($tt['pendapatan']); ?></td>
                           </tr>
                       <?php $i++; ?>
                     <?php endforeach; ?>

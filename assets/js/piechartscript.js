@@ -2,46 +2,47 @@ google.charts.load('current', { 'packages': ['corechart'] });
 google.charts.setOnLoadCallback(drawChart);
 
 function drawChart() {
-  var dataproject = new Array();
+  var datapendapatan = new Array();
   $.ajax({
-    url: 'http://localhost/wpu-login/project/getAllProject',
+    url: 'http://localhost/blossom_parfume/pendapatan/getAllPendapatan',
     method: 'post',
     dataType: 'json',
     success: function (data) {
-      $('#pie_chart').empty();
-      var recentProj = 0;
-      var OnGoingProj = 0;
-      var DoneProj = 0;
-      for (i in data) {
-        var progress = data[i].projProgress;
-        if (progress == 0) {
-          recentProj++;
-        } else if (progress == 100) {
-          DoneProj++;
-        } else {
-          OnGoingProj++;
-        }
-      }
+      // $('#pie_chart').empty();
+      // console.log(data);
+      // var recentProj = 0;
+      // var OnGoingProj = 0;
+      // var DoneProj = 0;
+      // for (i in data) {
+      //   var progress = data[i].projProgress;
+      //   if (progress == 0) {
+      //     recentProj++;
+      //   } else if (progress == 100) {
+      //     DoneProj++;
+      //   } else {
+      //     OnGoingProj++;
+      //   }
+      // }
 
-      dataproject.push(['Recent Project', recentProj]);
-      dataproject.push(['On Going Project', OnGoingProj]);
-      dataproject.push(['Done Project', DoneProj]);
+      // dataproject.push(['Recent Project', recentProj]);
+      // dataproject.push(['On Going Project', OnGoingProj]);
+      // dataproject.push(['Done Project', DoneProj]);
 
-      var dataholder = new google.visualization.DataTable();
-      dataholder.addColumn('string', 'Status');
-      dataholder.addColumn('number', 'Jumlah');
+      // var dataholder = new google.visualization.DataTable();
+      // dataholder.addColumn('string', 'Status');
+      // dataholder.addColumn('number', 'Jumlah');
 
-      var options = {
-        colors: ['#ff0000', '#00ff00', '#00ccff'],
-        title: 'Prosentase Proyek',
-        height: 470,
-        width: 700
+      // var options = {
+      //   colors: ['#ff0000', '#00ff00', '#00ccff'],
+      //   title: 'Prosentase Proyek',
+      //   height: 470,
+      //   width: 700
 
-      };
+      // };
 
-      dataholder.addRows(dataproject);
-      var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-      chart.draw(dataholder, options);
+      // dataholder.addRows(dataproject);
+      // var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+      // chart.draw(dataholder, options);
     }
   });
 

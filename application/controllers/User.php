@@ -6,13 +6,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		public function __construct()
 		{
 			parent::__construct();
-			var_dump($this->session->userdata('user'));
+			$this->load->library('form_validation');
+			$this->load->library('session');
+			// var_dump($this->session->userdata('user'));
 			$this->load->model('Bibit_model');		
 			$this->load->model('Outlet_model');
 			$this->load->model('Prediksi_model');
 			$this->load->model('Transaksi_model');
 			$this->load->model('User_model');
-			$this->load->library('form_validation');
 		}
 
 		public function index()
