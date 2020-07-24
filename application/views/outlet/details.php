@@ -7,7 +7,7 @@
 
           <div class="row mb-3">
             <!-- <img style="width: auto; height: auto;" src="<?php echo base_url('assets/img/') . 'Logo.png'; ?>" alt=""> -->
-            <div class="col-lg-6">
+            <div class="col-lg-12">
               <div class="card"  style="height: 400px;">
                 <div class="card-header">
                   Data Petugas
@@ -40,27 +40,6 @@
                 </div>
               </div>
             </div>
-            <div class="col-lg-6">
-              <div class="card" style="height: 400px;">
-                <div class="card-header">
-                  Data Transaksi
-                </div>
-                <div class="card-body" style="overflow: scroll;">
-                  <!-- <div class="card p-2">
-                    Transaksi Hari ini : 
-                  </div>
-                  <div class="card p-2">
-                    Transaksi Bulan ini : 
-                  </div>
-                  <div class="card p-2">
-                    Transaksi Tahun ini : 
-                  </div> -->
-                  <div class="chart-bar">
-                    <canvas id="myBarChart"></canvas>
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
           <div class="row mb-3">
             <div class="col">
@@ -69,7 +48,7 @@
                   Data Bibit
                 </div>
                 <div class="card-body">
-                  <table class="table table-hover">
+                  <table class="table table-hover" id="dataTable">
                     <thead>
                       <tr>
                         <th scope="col">Id.</th>

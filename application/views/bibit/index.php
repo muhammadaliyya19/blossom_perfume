@@ -95,7 +95,7 @@
 	    		  			<?php if ($user['jabatan']=="Admin"):?>
 						      	<td>
 					  				<a href="<?= base_url('bibit/detail/'.$b['id_bibit']); ?>" class="badge badge-primary float" data-id="<?php echo $b['id_bibit']; ?>">Detail</a>
-					  				<a href="#" class="badge badge-success float up_bibit ml-2" data-id="<?php echo $b['id_bibit']; ?>">Update</a>
+					  				<a href="#" class="badge badge-success float up_bibit ml-2" data-id="<?php echo $b['id_bibit']; ?>">Edit</a>
 							      	<a href="<?php echo base_url(); ?>bibit/hapus/<?php echo $b['id_bibit']; ?>" class="badge badge-danger float ml-2" onclick="return confirm('Hapus data?')">Delete</a>
 								</td>
 			    	        <?php endif; ?>

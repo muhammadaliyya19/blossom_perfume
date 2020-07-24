@@ -1,7 +1,7 @@
 <div class="container-fluid">
 	<div class="row mt-3">
 		<div class="col">
-			<h1 class="h3 text-gray-800"><?=$title;?></h1>  			
+			<h1 class="h3 text-gray-800"><?=$title;?><a href="<?= base_url('bibit'); ?>" class="btn btn-primary float float-right">Kembali</a></h1>  			
         </div>		
     </div>    
     <!-- FORM TAMBAH BIBIT -->

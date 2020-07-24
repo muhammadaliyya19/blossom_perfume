@@ -42,7 +42,7 @@
 						 </div>
 						 <div class="form-group">
 						    <label for="telepon">No. Hp</label>
-						    <input type="text" class="form-control" id="no_hp" placeholder="" name="no_hp">
+						    <input type="number" class="form-control" id="no_hp" placeholder="" name="no_hp" min="0" max="999999999999">
 						    <small class="form-text text-danger"><?php echo form_error('no_hp'); ?></small>
 						 </div>
 						 <div class="form-group">
