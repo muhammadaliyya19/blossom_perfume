@@ -29,7 +29,7 @@
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
                 <a class="dropdown-item" href="<?= base_url('auth/logout') ?>">
                   <i class="fas fa-fw fa-sign-out-alt text-gray-400"></i>
-                  <span>Logout</span>
+                  <span>Sign Out</span>
                 </a>
               </div>
             </li>

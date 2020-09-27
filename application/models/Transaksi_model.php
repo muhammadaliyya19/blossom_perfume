@@ -23,6 +23,7 @@
 				if ($_SESSION['user']['jabatan'] == "Admin") {
 					$data = array(
 					"id_bibit" 			=> $this->input->post('id_bibit', true),
+					"kode_transaksi"	=> $this->input->post('kode_transaksi', true),
 					"jumlah_pembelian" 	=> $this->input->post('jumlah', true),
 					"harga_beli"	 	=> $this_bibit['harga_beli'],
 					"harga_satuan" 		=> $this->input->post('harga_satuan', true),
@@ -34,6 +35,7 @@
 				}else{
 					$data = array(
 					"id_bibit" 			=> $this->input->post('id_bibit', true),
+					"kode_transaksi"	=> $this->input->post('kode_transaksi', true),
 					"jumlah_pembelian" 	=> $this->input->post('jumlah', true),
 					"harga_beli"	 	=> $this_bibit['harga_beli'],
 					"harga_satuan" 		=> $this->input->post('harga_satuan', true),
@@ -74,7 +76,8 @@
 			$today = $now->format('Y-m-d');	
 			$outlet = $_SESSION['user']['id_outlet'];
 			$queryTransaksi = "
-					SELECT transaksi.id_transaksi, bibit.nama_bibit, transaksi.jumlah_pembelian, transaksi.harga_satuan, transaksi.total_harga, transaksi.tanggal_transaksi, transaksi.outlet, transaksi.pegawai FROM transaksi INNER JOIN bibit ON transaksi.id_bibit = bibit.id_bibit WHERE transaksi.tanggal_transaksi LIKE '$today%' AND transaksi.outlet LIKE '$outlet'
+					SELECT transaksi.id_transaksi, bibit.nama_bibit, bibit.kode_bibit, transaksi.jumlah_pembelian, transaksi.kode_transaksi, transaksi.harga_satuan, transaksi.total_harga, transaksi.tanggal_transaksi, transaksi.outlet, user.nama FROM transaksi INNER JOIN bibit ON transaksi.id_bibit = bibit.id_bibit
+						INNER JOIN user ON transaksi.pegawai = user.id WHERE transaksi.tanggal_transaksi LIKE '$today%' AND transaksi.outlet LIKE '$outlet'
                     ";
       		$transaksi = $this->db->query($queryTransaksi)->result_array();
 			return $transaksi;
@@ -86,39 +89,91 @@
 			return $this->db->get_where('transaksi' , ['id_transaksi' => $id])->row_array();
 		}
 
-		public function getTransaksiHarian($bulan, $tahun)
+		public function getTransaksiHarian($bulan, $tahun, $outlet = null)
 		{
-			$queryPerhari = "
-							SELECT t.tanggal_transaksi as pertanggal, COUNT(*) as Jumlah_transaksi, SUM(t.total_harga) as ahj, SUM(t.harga_beli * t.jumlah_pembelian) as ahb, (SUM(t.total_harga)-SUM(t.harga_beli * t.jumlah_pembelian)) as pendapatan
-						    FROM transaksi t 
-						    WHERE MONTH(t.tanggal_transaksi) LIKE '%'+$bulan+'%' AND YEAR(t.tanggal_transaksi) LIKE '%'+$tahun+'%'
-						    GROUP BY CONCAT(YEAR(t.tanggal_transaksi), '-', MONTH(t.tanggal_transaksi) , '-', DAY(t.tanggal_transaksi))
-			";
-      		$transaksiHarian = $this->db->query($queryPerhari)->result_array();
+			$queryPerhari = "";
+			if ($outlet == null) {				
+				$queryPerhari = "
+								SELECT t.tanggal_transaksi as pertanggal, COUNT(*) as Jumlah_transaksi, SUM(t.total_harga) as ahj, SUM(t.harga_beli * t.jumlah_pembelian) as ahb, (SUM(t.total_harga)-SUM(t.harga_beli * t.jumlah_pembelian)) as pendapatan
+							    FROM transaksi t 
+							    WHERE MONTH(t.tanggal_transaksi) LIKE '%'+$bulan+'%' AND YEAR(t.tanggal_transaksi) LIKE '%'+$tahun+'%'
+							    GROUP BY CONCAT(YEAR(t.tanggal_transaksi), '-', MONTH(t.tanggal_transaksi) , '-', DAY(t.tanggal_transaksi))
+				";
+			}else{
+				$queryPerhari = "
+								SELECT t.outlet, t.tanggal_transaksi as pertanggal, COUNT(*) as Jumlah_transaksi, SUM(t.total_harga) as ahj, SUM(t.harga_beli * t.jumlah_pembelian) as ahb, (SUM(t.total_harga)-SUM(t.harga_beli * t.jumlah_pembelian)) as pendapatan
+							    FROM transaksi t 
+							    WHERE MONTH(t.tanggal_transaksi) LIKE '%'+$bulan+'%' AND YEAR(t.tanggal_transaksi) LIKE '%'+$tahun+'%'
+							    AND t.outlet LIKE $outlet
+							    GROUP BY CONCAT(YEAR(t.tanggal_transaksi), '-', MONTH(t.tanggal_transaksi) , '-', DAY(t.tanggal_transaksi))
+				";
+      		}
+	      	$transaksiHarian = $this->db->query($queryPerhari)->result_array();
       		return $transaksiHarian;
 		}
 
-		public function getTransaksiBulanan($tahun)
+		public function getTransaksiBulanan($tahun, $outlet = null)
 		{
-			$queryPerbulan = "
-							SELECT CONCAT(YEAR(t.tanggal_transaksi), '/', MONTH(t.tanggal_transaksi)) as pertanggal, COUNT(*) as Jumlah_transaksi, SUM(t.total_harga) as ahj, SUM(t.harga_beli * t.jumlah_pembelian) as ahb, (SUM(t.total_harga)-SUM(t.harga_beli * t.jumlah_pembelian)) as pendapatan
-						    FROM transaksi t 
-						    WHERE YEAR(t.tanggal_transaksi) LIKE '%'+$tahun+'%'
-						    GROUP BY CONCAT(YEAR(t.tanggal_transaksi), '-', MONTH(t.tanggal_transaksi))
-			";
+			$queryPerbulan = "";
+			if ($outlet == null) {
+				$queryPerbulan = "
+								SELECT CONCAT(YEAR(t.tanggal_transaksi), '/', MONTH(t.tanggal_transaksi)) as pertanggal, COUNT(*) as Jumlah_transaksi, SUM(t.total_harga) as ahj, SUM(t.harga_beli * t.jumlah_pembelian) as ahb, (SUM(t.total_harga)-SUM(t.harga_beli * t.jumlah_pembelian)) as pendapatan
+							    FROM transaksi t 
+							    WHERE YEAR(t.tanggal_transaksi) LIKE '%'+$tahun+'%'
+							    GROUP BY CONCAT(YEAR(t.tanggal_transaksi), '-', MONTH(t.tanggal_transaksi))
+				";
+			}else{
+				$queryPerbulan = "
+								SELECT t.outlet, CONCAT(YEAR(t.tanggal_transaksi), '/', MONTH(t.tanggal_transaksi)) as pertanggal, COUNT(*) as Jumlah_transaksi, SUM(t.total_harga) as ahj, SUM(t.harga_beli * t.jumlah_pembelian) as ahb, (SUM(t.total_harga)-SUM(t.harga_beli * t.jumlah_pembelian)) as pendapatan
+							    FROM transaksi t 
+							    WHERE YEAR(t.tanggal_transaksi) LIKE '%'+$tahun+'%' AND t.outlet LIKE $outlet
+							    GROUP BY CONCAT(YEAR(t.tanggal_transaksi), '-', MONTH(t.tanggal_transaksi))
+				";
+			}
       		$transaksiBulanan = $this->db->query($queryPerbulan)->result_array();
       		return $transaksiBulanan;
 		}
 
-		public function getTransaksiTahunan()
+		public function getTransaksiTahunan($outlet = null)
 		{
-			$queryPertahun = "
+			$queryPertahun = "";
+			if ($outlet == null) {
+				$queryPertahun = "
 							SELECT YEAR(t.tanggal_transaksi) as pertanggal, COUNT(*) as Jumlah_transaksi, SUM(t.total_harga) as ahj, SUM(t.harga_beli * t.jumlah_pembelian) as ahb, (SUM(t.total_harga)-SUM(t.harga_beli * t.jumlah_pembelian)) as pendapatan
 						    FROM transaksi t 
 						    GROUP BY YEAR(t.tanggal_transaksi)
-			";
+				";
+			}else{
+				$queryPertahun = "
+							SELECT t.outlet, YEAR(t.tanggal_transaksi) as pertanggal, COUNT(*) as Jumlah_transaksi, SUM(t.total_harga) as ahj, SUM(t.harga_beli * t.jumlah_pembelian) as ahb, (SUM(t.total_harga)-SUM(t.harga_beli * t.jumlah_pembelian)) as pendapatan
+						    FROM transaksi t 
+						    WHERE t.outlet LIKE $outlet
+						    GROUP BY YEAR(t.tanggal_transaksi)
+				";
+			}
 			$transaksiTahunan = $this->db->query($queryPertahun)->result_array();
       		return $transaksiTahunan;
+		}
+
+		public function getPenjualanAllBibit()
+		{
+			$penjualanBibit = [];
+			$bibit = $this->db->get('bibit')->result_array();
+			foreach ($bibit as $b) {
+				$queryPenjualanBibit = "
+								SELECT t.id_bibit, SUM(t.jumlah_pembelian) as terjual
+							    FROM transaksi t WHERE t.id_bibit LIKE $b[id_bibit]
+							    GROUP BY t.id_bibit
+				";
+				$bibit_terjual = $this->db->query($queryPenjualanBibit)->row_array();
+				if ($bibit_terjual != null) {
+					array_push($penjualanBibit, $bibit_terjual);
+				}else{
+					$data_empty = ['id_bibit'=>$b['id_bibit'], 'terjual'=>'0'];
+					array_push($penjualanBibit, $data_empty);					
+				}				
+			}
+      		return $penjualanBibit;
 		}
 	}
 ?>

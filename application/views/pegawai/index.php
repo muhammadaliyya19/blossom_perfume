@@ -14,7 +14,8 @@
       </div>
     </div>
     <?php endif; ?> -->
-    <div class="row mt-3">    
+    <div class="row mt-3">
+    <div class="col"  style="height: 500px; overflow-y: scroll;">      
       <table class="table table-hover" id="dataTable">
       <thead>
         <tr>
@@ -40,7 +41,7 @@
                 <td><?php echo $p['no_hp']; ?></td>
                 <td><?php echo $p['alamat']; ?></td>
                 <td><?php echo $p['username']; ?></td>
-                <td><?php echo $p['password']; ?></td>
+                <td>?</td>
                 <td><?php echo $p['jabatan']; ?></td>
                 <?php if($p['jabatan'] != 'Admin'): ?>
                   <?php foreach ($outlet as $o): if($p['id_outlet'] == $o['id_outlet']): ?>
@@ -52,7 +53,7 @@
                 <td><?php echo $p['alamat']; ?></td>
                 <td><?php echo $p['date_created']; ?></td>
                 <td>
-                <a href="<?php echo base_url(); ?>pegawai/update/<?php echo $p['id']; ?>" class="badge badge-success float" data-id="<?php echo $p['id']; ?>">Update</a>
+                <a href="<?php echo base_url(); ?>pegawai/update/<?php echo $p['id']; ?>" class="badge badge-success float" data-id="<?php echo $p['id']; ?>">Edit</a>
                   <a href="<?php echo base_url(); ?>pegawai/hapus/<?php echo $p['id']; ?>" class="badge badge-danger float ml-2" onclick="return confirm('Hapus data?')">Delete</a>
                 </td>
               </tr>
@@ -60,6 +61,7 @@
         <?php endforeach; ?>
       </tbody>
     </table>
+    </div>  
   </div>
 </div>
 </div>

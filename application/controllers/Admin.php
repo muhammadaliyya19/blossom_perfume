@@ -37,13 +37,17 @@ class Admin extends CI_Controller
 
 	public function Outlet($id)
 	{
+		$thisMonth = date('m');
+		$thisYear = date('Y');
 		$data['outlet'] = $this->Outlet_model->getAllOutlet();
 		$data['detail_outlet'] = $this->Outlet_model->getOutletById($id);
 		$data['bibit_outlet'] = $this->Outlet_model->getOutletBibit($id);
 		$data['title'] = "Dashboard Outlet " . $data['detail_outlet']['alamat_outlet'];
 		$data['bibit'] = $this->Bibit_model->getAllBibit();
 		$data['pegawai'] = $this->User_model->getPegawaiByOutlet($id);
-		$data['transaksi'] = $this->Transaksi_model->getAllTransaksi();
+		$data['transaksiHarian'] = $this->Transaksi_model->getTransaksiHarian($thisMonth, $thisYear, $id);
+      	$data['transaksiBulanan'] = $this->Transaksi_model->getTransaksiBulanan($thisYear, $id);
+      	$data['transaksiTahunan'] = $this->Transaksi_model->getTransaksiTahunan($id);			
 		$data['user'] = $_SESSION['user'];
 		$this->load->view('templates/header', $data);
 		$this->load->view('templates/sidebar', $data);

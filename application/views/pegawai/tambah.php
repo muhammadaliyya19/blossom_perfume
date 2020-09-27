@@ -21,9 +21,34 @@
 						   <small class="form-text text-danger"><?php echo form_error('password'); ?></small>
 						 </div>
 						 <div class="form-group">
-						    <label for="nama">Nama</label>
+						    <label for="nama">Kode Petugas</label>
+						    <input type="text" class="form-control" id="nama" placeholder="" name="kode_petugas">    
+						    <small class="form-text text-danger"><?php echo form_error('kode_petugas'); ?></small>
+						 </div>
+						 <div class="form-group">
+						    <label for="nama">NIK</label>
+						    <input type="text" class="form-control" id="nik" placeholder="NIK" name="nik">    
+						    <small class="form-text text-danger"><?php echo form_error('nik'); ?></small>
+						 </div>
+						 <div class="form-group">
+						    <label for="nama">Nama Petugas</label>
 						    <input type="text" class="form-control" id="nama" placeholder="" name="nama">    
 						    <small class="form-text text-danger"><?php echo form_error('nama'); ?></small>
+						 </div>
+						 <div class="form-group">
+						    <label for="nama">Tempat/Tanggal Lahir</label>
+						    <input type="text" class="form-control" id="ttl" placeholder="tempat / dd-mm-yyyy" name="ttl">    
+						    <small class="form-text text-danger"><?php echo form_error('ttl'); ?></small>
+						 </div>
+						 <div class="form-group">
+						    <label for="nama">Kelamin</label>
+						    <input type="text" class="form-control" id="kelamin" placeholder="L / P" name="kelamin">    
+						    <small class="form-text text-danger"><?php echo form_error('kelamin'); ?></small>
+						 </div>
+						 <div class="form-group">
+						    <label for="nama">Agama</label>
+						    <input type="text" class="form-control" id="gama" placeholder="" name="agama">    
+						    <small class="form-text text-danger"><?php echo form_error('agama'); ?></small>
 						 </div>
 						 <div class="form-group">
 						 	<label for="role">Jabatan</label>

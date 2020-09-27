@@ -4,6 +4,9 @@
 			<h1 class="h3 text-gray-800"><?=$title;?></h1>  
         </div>		
     </div>    
+    <!-- <div class="row"> -->
+    <?php echo $this->session->flashdata('message'); ?>
+    <!-- </div>     -->
     <!-- FORM TAMBAH BIBIT -->
     <?php if ($user['jabatan']=="Admin"):?>
     			<div class="card">
@@ -16,10 +19,21 @@
 							<div class="form-group">	
 								<div class="row">
 									<div class="col-2">
+										<label for="picName">Kode Bibit</label>
+									</div>
+									<div class="col-10">
+										<input type="text" class="form-control" id="kode_bibit" placeholder=". . ." name="kode_bibit">
+										<small class="form-text text-danger"><?php echo form_error('kode_bibit'); ?></small>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">	
+								<div class="row">
+									<div class="col-2">
 										<label for="picName">Nama Bibit</label>
 									</div>
 									<div class="col-10">
-										<input type="text" class="form-control" id="nama_bibit" placeholder="" name="nama_bibit">
+										<input type="text" class="form-control" id="nama_bibit" placeholder=". . ." name="nama_bibit">
 										<small class="form-text text-danger"><?php echo form_error('nama_bibit'); ?></small>
 									</div>
 								</div>
@@ -30,7 +44,7 @@
 										<label for="picMail">Harga Jual (@ml)</label>
 									</div>
 									<div class="col-10">
-										<input type="text" class="form-control" id="harga_jual" placeholder="" name="harga_jual">
+										<input type="number" class="form-control" id="harga_jual" placeholder=". . ." name="harga_jual">
 										<small class="form-text text-danger"><?php echo form_error('harga_jual'); ?></small>
 									</div>
 								</div>
@@ -41,7 +55,7 @@
 										<label for="picPosition">Harga Beli (@ml)</label>
 									</div>
 									<div class="col-10">
-										<input type="text" class="form-control" id="harga_beli" placeholder="" name="harga_beli">
+										<input type="number" class="form-control" id="harga_beli" placeholder=". . ." name="harga_beli">
 										<small class="form-text text-danger"><?php echo form_error('harga_beli'); ?></small>
 									</div>
 								</div>
@@ -54,15 +68,24 @@
 	<?php endif; ?>    
     <!-- BATAS FORM TAMBAH BIBIT -->
     <div class="row mt-3">	
-	    <div class="col">	
+	    <div class="col mb-3">	
+	    	<div class="row mb-3">
+	    		<div class="col">
+		    		<span class="btn btn-primary float-right sort_best_seller">Sort Best Seller</span>
+	    		</div>
+	    	</div>
 	        <table class="table table-hover" id="dataTable">
 			  <thead>
 			    <tr>
 			      <th scope="col">No.</th>
+			      <th scope="col">Kode Bibit</th>
 			      <th scope="col">Nama</th>
 			      <th scope="col">Stok Total (mL)</th>
 			      <th scope="col">Harga Jual</th>
-			      <th scope="col">Harga Beli</th>
+	    		  <?php if ($user['jabatan']=="Admin"):?>
+			      	<th scope="col">Harga Beli</th>
+			      <?php endif; ?>
+			      <th scope="col">Terjual (mL)</th>			      	
 			      <th scope="col">Last Updated</th>
 	    		  <?php if ($user['jabatan']=="Admin"):?>
 			      	<th scope="col">Action</th>
@@ -72,10 +95,14 @@
 			  <tfoot>
 			    <tr>
 			      <th scope="col">No.</th>
+			      <th scope="col">Kode Bibit</th>
 			      <th scope="col">Nama</th>
 			      <th scope="col">Stok Total (mL)</th>
 			      <th scope="col">Harga Jual</th>
-			      <th scope="col">Harga Beli</th>
+	    		  <?php if ($user['jabatan']=="Admin"):?>
+			      	<th scope="col">Harga Beli</th>
+			      <?php endif; ?>
+			      <th scope="col">Terjual (mL)</th>			      	
 			      <th scope="col">Last Updated</th>
 	    		  <?php if ($user['jabatan']=="Admin"):?>
 			      	<th scope="col">Action</th>
@@ -87,10 +114,16 @@
 					    <?php foreach ($bibit as $b) : ?>
 						    <tr>
 						      <th scope="row"><?=$i.'. '; $i++; ?></th>
+						      <td><?php echo $b['kode_bibit']; ?></td>
 						      <td><?php echo $b['nama_bibit']; ?></td>
 						      <td><?php echo $b['Stok_bibit']; ?></td>
 						      <td><?php echo $b['harga_jual']; ?></td>
-						      <td><?php echo $b['harga_beli']; ?></td>
+						      <td><?php echo $b['harga_beli']; ?></td>		      	
+					    	<?php foreach ($sold as $s) : ?>
+	    		  				<?php if ($s['id_bibit']==$b['id_bibit']):?>
+						      		<td><?=$s['terjual']; ?></td>		      	
+			    	        	<?php endif; ?>
+							<?php endforeach; ?>
 						      <td><?php echo $b['date_update_bibit']; ?></td>
 	    		  			<?php if ($user['jabatan']=="Admin"):?>
 						      	<td>
@@ -110,7 +143,11 @@
 							      <td><?php echo $b['nama_bibit']; ?></td>
 							      <td><?php echo $bo['stok']; ?></td>
 							      <td><?php echo $b['harga_jual']; ?></td>
-							      <td><?php echo $b['harga_beli']; ?></td>
+						      	  <?php foreach ($sold as $s) : ?>
+			    		  				<?php if ($s['id_bibit']==$b['id_bibit']):?>
+								      		<td><?=$s['terjual']; ?></td>		      	
+					    	        	<?php endif; ?>
+									<?php endforeach; ?>		      	
 							      <td><?php echo $bo['last_update']; ?></td>		    		  			
 							    </tr>
 							<?php endif; ?>

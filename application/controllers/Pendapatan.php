@@ -19,13 +19,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		public function index()
 		{
 			$data['title'] = 'Pendapatan';
+				$data['outlet'] = $this->Outlet_model->getAllOutlet();			
 			$data['user'] = $this->session->userdata('user');
 			$thisMonth = date('m');
 			$thisYear = date('Y');
 			if ($_SESSION['user']['jabatan'] == "Admin") {
-      			$transaksiHarian = $this->Transaksi_model->getTransaksiHarian($thisMonth, $thisYear);
-      			$transaksiBulanan = $this->Transaksi_model->getTransaksiBulanan($thisYear);
-      			$transaksiTahunan = $this->Transaksi_model->getTransaksiTahunan();
+      			$transaksiHarian = $this->Transaksi_model->getTransaksiHarian($thisMonth, $thisYear, "");
+      			$transaksiBulanan = $this->Transaksi_model->getTransaksiBulanan($thisYear, "");
+      			$transaksiTahunan = $this->Transaksi_model->getTransaksiTahunan("");
       			$data['transaksiHarian'] = $transaksiHarian;
 				$data['transaksiBulanan'] = $transaksiBulanan;
 				$data['transaksiTahunan'] = $transaksiTahunan;
@@ -42,20 +43,38 @@ defined('BASEPATH') or exit('No direct script access allowed');
       		//===============================================================================8 Jul
       		$thisMonth = date('m');
 			$thisYear = date('Y');
-      		$transaksiHarian = $this->Transaksi_model->getTransaksiHarian($thisMonth, $thisYear);
+			$transaksiHarian = "";
+      		if ($_POST != null) {
+      			$id_outlet = $_POST['id'];      			
+      			$transaksiHarian = $this->Transaksi_model->getTransaksiHarian($thisMonth, $thisYear, $id_outlet);
+      		}else{
+      			$transaksiHarian = $this->Transaksi_model->getTransaksiHarian($thisMonth, $thisYear);
+      		}
 			echo json_encode($transaksiHarian);
 		}
 
 		public function getPendapatanBulanan()
 		{
 			$thisYear = date('Y');      		
-      		$transaksiBulanan2 = $this->Transaksi_model->getTransaksiBulanan($thisYear);
+			$transaksiBulanan2 = "";
+			if ($_POST != null) {
+      			$id_outlet = $_POST['id'];      			
+      			$transaksiBulanan2 = $this->Transaksi_model->getTransaksiBulanan($thisYear, $id_outlet);      			
+      		}else{
+      			$transaksiBulanan2 = $this->Transaksi_model->getTransaksiBulanan($thisYear);
+      		}
 			echo json_encode($transaksiBulanan2);
 		}
 
 		public function getPendapatanTahunan()
 		{
-			$transaksiTahunan = $this->Transaksi_model->getTransaksiTahunan();
+			$transaksiTahunan = "";
+			if ($_POST != null) {
+      			$id_outlet = $_POST['id'];      			
+				$transaksiTahunan = $this->Transaksi_model->getTransaksiTahunan($id_outlet);      			
+      		}else{
+				$transaksiTahunan = $this->Transaksi_model->getTransaksiTahunan();
+      		}
 			echo json_encode($transaksiTahunan);
 		}
 	}

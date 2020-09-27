@@ -12,6 +12,7 @@
 			date_default_timezone_set("Asia/Jakarta");
 			$now = new DateTime();
 			$data = array(
+			"kode_bibit" 		=> $this->input->post('kode_bibit', true),
 			"nama_bibit" 		=> $this->input->post('nama_bibit', true),
 			"Stok_bibit" 		=> 0,
 			"harga_jual" 		=> $this->input->post('harga_jual', true),
@@ -68,6 +69,7 @@
 			date_default_timezone_set("Asia/Jakarta");
 			$now = new DateTime();
 			$data = array(
+			"kode_bibit" 		=> $this->input->post('kode_bibit', true),
 			"nama_bibit" 		=> $this->input->post('nama_bibit', true),
 			"Stok_bibit" 		=> $this->input->post('stok_bibit', true),
 			"harga_jual" 		=> $this->input->post('harga_jual', true),

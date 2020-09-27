@@ -9,10 +9,25 @@
 
 		public function tambahDataOutlet()
 		{
-			$data = array(
-				"alamat_outlet"	=> $this->input->post('alamat', true)
-			);
-			$this->db->insert('outlet', $data);
+			$kode_baru  = $this->input->post('kode', true);
+			$query	= 'SELECT kode_outlet FROM outlet';
+      		$allOutlet 	= $this->db->query($query)->result_array();
+      		$isExist = 0;
+      		foreach ($allOutlet as $ao) {
+      			if ($ao['kode_outlet'] == $kode_baru) {
+      				$isExist++;
+      			}
+      		}
+      		if ($isExist > 0) {      			
+      			$this->session->set_flashdata('message','<div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">Tidak Bisa Menambahkan outlet (Kode Outlet telah digunakan) – Tolong coba lagi ! <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');	
+				redirect('outlet');
+      		}else{
+				$data = array(
+					"kode_outlet"	=> $this->input->post('kode', true),
+					"alamat_outlet"	=> $this->input->post('alamat', true)
+				);
+				$this->db->insert('outlet', $data);
+			}
 		}
 
 		public function tambahAllBibit()
@@ -79,11 +94,15 @@
 
 		public function updateDataOutlet()
 		{
-			$data = array(
-				"alamat_outlet"	=> $this->input->post('alamat', true)
-			);
-			$this->db->where('id_outlet', $this->input->post('id', true));
-			$this->db->update('outlet', $data);
+			$kode_baru  = $this->input->post('kode', true);
+      		{		
+	      		$data = array(
+					"kode_outlet"	=> $this->input->post('kode', true),
+					"alamat_outlet"	=> $this->input->post('alamat', true)
+				);
+				$this->db->where('id_outlet', $this->input->post('id', true));
+				$this->db->update('outlet', $data);
+      		}
 		}
 	}
 ?>

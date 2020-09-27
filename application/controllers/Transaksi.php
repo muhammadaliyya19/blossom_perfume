@@ -22,7 +22,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			if ($_SESSION['user']['jabatan'] == "Admin") {
 				$data['title'] = 'Transaksi';
 				$queryTransaksi = "
-					SELECT transaksi.id_transaksi, bibit.nama_bibit, transaksi.jumlah_pembelian, transaksi.harga_satuan, transaksi.total_harga, transaksi.tanggal_transaksi, transaksi.outlet, transaksi.pegawai FROM transaksi INNER JOIN bibit ON transaksi.id_bibit = bibit.id_bibit;
+					SELECT transaksi.id_transaksi, bibit.nama_bibit, bibit.kode_bibit, transaksi.jumlah_pembelian, transaksi.kode_transaksi, transaksi.harga_satuan, transaksi.total_harga, transaksi.tanggal_transaksi, transaksi.outlet, user.nama FROM transaksi INNER JOIN bibit ON transaksi.id_bibit = bibit.id_bibit
+						INNER JOIN user ON transaksi.pegawai = user.id;
                     ";
       			$transaksi = $this->db->query($queryTransaksi)->result_array();
 				$data['bibit'] = $this->Bibit_model->getAllBibit();			
@@ -53,11 +54,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 		public function tambah()
 		{
+			$this->form_validation->set_rules('kode_transaksi', 'Kode Transaksi', 'required');
 			$this->form_validation->set_rules('id_bibit', 'Bibit', 'required');
 			$this->form_validation->set_rules('jumlah', 'Jumlah pembelian', 'required');
 			$this->form_validation->set_rules('harga_satuan', 'Harga jual', 'required');
 			$this->form_validation->set_rules('harga_total', 'Total harga', 'required');
 			if ($this->form_validation->run() == FALSE) {	
+				$this->session->set_flashdata('message','<div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">Error – Tolong isi form yang masih kosong ! <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');	
 				redirect('transaksi');
 			}else{
 				$id_outlet = '';
@@ -71,7 +74,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 				if ($success > 0) {
 					$this->Outlet_model->kurangiStokBibit($id_outlet, $id_bibit);
 					$this->Bibit_model->UpdateStokBibit($id_bibit);				
-					$this->session->set_flashdata('message','<div class="alert alert-success alert-dismissible fade show mt-3" role="alert">Transaksi telah ditambahkan! <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');	
+					$this->session->set_flashdata('message','<div class="alert alert-success alert-dismissible fade show mt-3" role="alert">Transaksi telah berhasil ditambahkan! <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');	
 					redirect('transaksi');
 				}else{
 					$this->session->set_flashdata('message','<div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">Transaksi gagal ditambahkan! Cek stok bibit! <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');	
@@ -83,7 +86,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		public function hapus($id)
 		{
 			if ($this->Transaksi_model->hapusDataTransaksi($id) > 0) {
-				$this->session->set_flashdata('message','<div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">Data transaksi telah dihapus ! <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');	
+				$this->session->set_flashdata('message','<div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">Data berhasil di hapus ! <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');	
 				redirect('transaksi');
 			}
 		}

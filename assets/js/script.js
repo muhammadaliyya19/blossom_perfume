@@ -4,6 +4,7 @@ $(function() {
 		$('.card-body form').attr('action','https://localhost/blossom_parfume/outlet/tambah');
 		$('#id').val('');
 		$('#alamat').val('');
+		$('#kode').val('');
 	});
 
 	$('.batal_bb').on('click', function() {
@@ -12,22 +13,45 @@ $(function() {
 		$('.card-header').html('Form Tambah Bibit');		
 		$('#id_bibit').val('');
 		$('#nama_bibit').val('');
+		$('#kode_bibit').val('');
 		$('#stok_bibit').val('');
 		$('#harga_jual').val('');
 		$('#harga_beli').val('');
 	});
+
+	$('#tambah_transaksi').on('click', function() {
+		$('#id_outlet').val('');
+		$('#id_bibit').val('');
+		$('#kode_bibit').val('');
+		$('#harga_satuan').val('');
+		$('#harga_beli').val('');
+		$('#harga_total').val('');
+		$('#jumlah').val('');
+	});
 	
+	$('#tambahOutlet').on('click', function() {
+		$('form button[type=submit]').html('Tambah');
+		$('.card-body form').attr('action','https://localhost/blossom_parfume/outlet/tambah');
+		$('#outletModalLabel').html('Tambah Outlet');
+		$('#id').val('');
+		$('#alamat').val('');
+		$('#kode').val('');
+	});	
+
 	$('.upd_outlet').on('click', function() {
 		const id = $(this).data('id');
-		$('form button[type=submit]').html('Update');		
-		$('.card-body form').attr('action','http://localhost/blossom_parfume/outlet/update');
+		$('#outletModalLabel').html('Edit Outlet');
+		$('form button[type=submit]').html('Edit');		
+		$('.modal-body form').attr('action','http://localhost/blossom_parfume/outlet/update');
 		$.ajax({
 			url: 'http://localhost/blossom_parfume/outlet/getDetails',
 			data: { id: id },
 			method: 'post',
 			dataType: 'json',
 			success:function(data) {
+				console.log(data);
 				$('#id').val(data.id_outlet);
+				$('#kode').val(data.kode_outlet);
 				$('#alamat').val(data.alamat_outlet);
 			}
 		});
@@ -35,8 +59,8 @@ $(function() {
 
 	$('.up_bibit').on('click', function() {
 		const id = $(this).data('id');
-		$('form button[type=submit]').html('Update');		
-		$('.card-header').html('Form Update Bibit');		
+		$('form button[type=submit]').html('Edit');		
+		$('.card-header').html('Form Edit Bibit');		
 		$('.card-body form').attr('action','http://localhost/blossom_parfume/bibit/update');
 		$.ajax({
 			url: 'http://localhost/blossom_parfume/bibit/getDetails',
@@ -45,6 +69,7 @@ $(function() {
 			dataType: 'json',
 			success:function(data) {
 				$('#id_bibit').val(data.id_bibit);
+				$('#kode_bibit').val(data.kode_bibit);
 				$('#nama_bibit').val(data.nama_bibit);
 				$('#stok_bibit').val(data.Stok_bibit);
 				$('#harga_jual').val(data.harga_jual);
@@ -66,6 +91,7 @@ $(function() {
 			dataType: 'json',
 			success:function(data) {
 				$('#harga_satuan').val(data.harga_jual);
+				$('#kode_bibit').val(data.kode_bibit);
 				// $('#harga_total').val(data.harga_jual * jumlah);
 			}
 		});

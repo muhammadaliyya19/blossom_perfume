@@ -19,27 +19,23 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		public function index()
 		{
 			$data['user'] = $_SESSION['user'];
-			$data['bibit'] = $this->Bibit_model->getAllBibit();			
+			$data['bibit'] = $this->Bibit_model->getAllBibit();	
+			$data['sold'] = $this->Transaksi_model->getPenjualanAllBibit();			
 			if ($_SESSION['user']['jabatan'] == "Admin") {
 				$data['title'] = 'Data Semua Bibit';
 				$data['outlet'] = $this->Outlet_model->getAllOutlet();
       			// print_r($data['bibit']);
       			// die;
-				$this->load->view('templates/header', $data);
-				$this->load->view('templates/sidebar', $data);
-				$this->load->view('templates/topbar', $data);
-				$this->load->view('bibit/index', $data);
-				$this->load->view('templates/footer');
 			}else{
 				$data['bibit_outlet'] = $this->Outlet_model->getOutletBibit($_SESSION['user']['id_outlet']);
 				$data['outlet'] = $this->Outlet_model->getOutletById($_SESSION['user']['id_outlet']);
-				$data['title'] = 'Data Bibit Outlet ' . $data['outlet']['alamat_outlet'];
-				$this->load->view('templates/header', $data);
-				$this->load->view('templates/sidebar', $data);
-				$this->load->view('templates/topbar', $data);
-				$this->load->view('bibit/index', $data);
-				$this->load->view('templates/footer');
+				$data['title'] = 'Data Bibit Outlet ' . $data['outlet']['alamat_outlet'];				
 			}
+			$this->load->view('templates/header', $data);
+			$this->load->view('templates/sidebar', $data);
+			$this->load->view('templates/topbar', $data);
+			$this->load->view('bibit/index', $data);
+			$this->load->view('templates/footer');
 		}
 
 		public function detail($id)
@@ -62,11 +58,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 		public function tambah()
 		{
+			$this->form_validation->set_rules('kode_bibit', 'Kode Bibit', 'required');
 			$this->form_validation->set_rules('nama_bibit', 'Nama Bibit', 'required');
-			// $this->form_validation->set_rules('stok_bibit', 'Stok', 'required');
 			$this->form_validation->set_rules('harga_jual', 'Harga Jual', 'required');
 			$this->form_validation->set_rules('harga_beli', 'Harga Beli', 'required');
 			if ($this->form_validation->run() == FALSE) {	
+				$this->session->set_flashdata('message','<div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">Error – Tolong isi form yang masih kosong ! <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');	
 				redirect('bibit');
 			}else{
 				$this->Bibit_model->tambahDataBibit();				
@@ -87,14 +84,16 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 		public function update()
 		{
+			$this->form_validation->set_rules('kode_bibit', 'Kode Bibit', 'required');
 			$this->form_validation->set_rules('nama_bibit', 'Nama Bibit', 'required');
 			$this->form_validation->set_rules('harga_jual', 'Harga Jual', 'required');
 			$this->form_validation->set_rules('harga_beli', 'Harga Beli', 'required');
 			if ($this->form_validation->run() == FALSE) {
+				$this->session->set_flashdata('message','<div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">Error – Tolong isi form yang masih kosong ! <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');	
 				redirect('bibit');
 			}else{
 				$this->Bibit_model->updateDataBibit();
-				$this->session->set_flashdata('message','<div class="alert alert-success alert-dismissible fade show mt-3" role="alert">Bibit telah diupdate ! <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');	
+				$this->session->set_flashdata('message','<div class="alert alert-success alert-dismissible fade show mt-3" role="alert">Data berhasil di ubah ! <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');	
 				redirect('bibit');
 			}
 		}

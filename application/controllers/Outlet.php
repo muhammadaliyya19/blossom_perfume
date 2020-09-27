@@ -41,13 +41,15 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 		public function tambah()
 		{
+			$this->form_validation->set_rules('kode', 'Kode Outlet', 'required');
 			$this->form_validation->set_rules('alamat', 'Alamat Outlet', 'required');
 			if ($this->form_validation->run() == FALSE) {				
-				redirect('outlet');
+				$this->session->set_flashdata('message','<div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">Error – Tolong isi form yang masih kosong ! <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');	
+				redirect('outlet');				
 			}else{
 				$this->Outlet_model->tambahDataOutlet();				
 				$this->Outlet_model->tambahAllBibit();				
-				$this->session->set_flashdata('message','<div class="alert alert-success alert-dismissible fade show mt-3" role="alert">Outlet telah ditambahkan! <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');	
+				$this->session->set_flashdata('message','<div class="alert alert-success alert-dismissible fade show mt-3" role="alert">Outlet telah berhasil ditambahkan! <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');	
 				redirect('outlet');
 			}
 		}
@@ -67,12 +69,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 		public function update()
 		{
+			$this->form_validation->set_rules('kode', 'Kode outlet', 'required');
 			$this->form_validation->set_rules('alamat', 'Alamat outlet', 'required');
 			if ($this->form_validation->run() == FALSE) {
+				$this->session->set_flashdata('message','<div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">Error – Tolong isi form yang masih kosong ! <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');	
 				redirect('outlet');
 			}else{
 				echo $this->Outlet_model->updateDataOutlet();
-				$this->session->set_flashdata('message','<div class="alert alert-success alert-dismissible fade show mt-3" role="alert">Outlet telah diupdate ! <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');	
+				$this->session->set_flashdata('message','<div class="alert alert-success alert-dismissible fade show mt-3" role="alert">Outlet telah berhasil diubah ! <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');	
 				redirect('outlet');
 			}
 		}
