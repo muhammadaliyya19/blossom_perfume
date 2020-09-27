@@ -2,6 +2,7 @@
 	<div class="row mt-3 mb-4">
 		<div class="col-lg">
 		<h1 class="h3 mb-4 text-gray-800"><?=$title;?></h1>   
+    	<?php echo $this->session->flashdata('message'); ?>	
 			<div class="card">
 				<div class="card-body">
 				<!-- <?php if (validation_errors()):  ?>

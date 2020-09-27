@@ -2,6 +2,7 @@
 	<div class="row mt-3 mb-4">
 		<div class="col-lg">
 		<h1 class="h3 mb-4 text-gray-800"><?=$title;?></h1>   
+    		<?php echo $this->session->flashdata('message'); ?>
 			<div class="card">
 				<div class="card-body">
 				<!-- <?php if (validation_errors()):  ?>
@@ -22,9 +23,33 @@
 						   <small class="form-text text-danger"><?php echo form_error('password'); ?></small>
 						 </div>
 						 <div class="form-group">
+						    <label for="nama">Kode Petugas</label>
+						    <input type="text" class="form-control" id="nama" placeholder="" name="kode_petugas" value="<?=$pegawai['kode_petugas']; ?>">    
+						    <small class="form-text text-danger"><?php echo form_error('kode_petugas'); ?></small>
+						 </div>
+						 <div class="form-group">
+						    <label for="nama">NIK</label>
+						    <input type="text" class="form-control" id="nik" placeholder="NIK" name="nik" value="<?=$pegawai['nik']; ?>">    
+						    <small class="form-text text-danger"><?php echo form_error('nik'); ?></small>
+						 </div>
+						 <div class="form-group">
 						    <label for="nama">Nama</label>
 						    <input type="text" class="form-control" id="nama" placeholder="" name="nama" value="<?=$pegawai['nama'];?>">    
 						    <small class="form-text text-danger"><?php echo form_error('nama'); ?></small>
+						 </div><div class="form-group">
+						    <label for="nama">Tempat/Tanggal Lahir</label>
+						    <input type="text" class="form-control" id="ttl" placeholder="tempat / dd-mm-yyyy" name="ttl" value="<?=$pegawai['ttl'];?>">    
+						    <small class="form-text text-danger"><?php echo form_error('ttl'); ?></small>
+						 </div>
+						 <div class="form-group">
+						    <label for="nama">Kelamin</label>
+						    <input type="text" class="form-control" id="kelamin" placeholder="L / P" name="kelamin" value="<?=$pegawai['kelamin'];?>">    
+						    <small class="form-text text-danger"><?php echo form_error('kelamin'); ?></small>
+						 </div>
+						 <div class="form-group">
+						    <label for="nama">Agama</label>
+						    <input type="text" class="form-control" id="gama" placeholder="" name="agama" value="<?=$pegawai['agama'];?>">    
+						    <small class="form-text text-danger"><?php echo form_error('agama'); ?></small>
 						 </div>
 						 <div class="form-group">
 						 	<label for="role">Jabatan</label>

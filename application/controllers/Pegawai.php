@@ -46,24 +46,25 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			$data['outlet'] = $this->Outlet_model->getAllOutlet();			
 			$this->form_validation->set_rules('username', 'Username', 'required');
 			$this->form_validation->set_rules('password', 'Password', 'required');
-			$this->form_validation->set_rules('nama', 'Nama Pegawai', 'required');
+			$this->form_validation->set_rules('kode_petugas', 'Kode Petugas', 'required');
+			$this->form_validation->set_rules('nik', 'NIK Petugas', 'required');
+			$this->form_validation->set_rules('nama', 'Nama Petugas', 'required');
+			$this->form_validation->set_rules('ttl', 'TTL Petugas', 'required');
+			$this->form_validation->set_rules('kelamin', 'Jenis Kelamin Petugas', 'required');
+			$this->form_validation->set_rules('agama', 'Agama Petugas', 'required');
 			$this->form_validation->set_rules('jabatan', 'Jabatan Pegawai', 'required');
 			$this->form_validation->set_rules('id_outlet', 'Outlet', 'required');
 			$this->form_validation->set_rules('no_hp', 'Nomor HP', 'required');
 			$this->form_validation->set_rules('alamat', 'Alamat Pegawai', 'required');
-			if ($this->form_validation->run() == FALSE) {	
-				// echo "False cuk";
-				// die;			
+			if ($this->form_validation->run() == FALSE) {					
 				$this->load->view('templates/header', $data);
 				$this->load->view('templates/sidebar', $data);
 				$this->load->view('templates/topbar', $data);
 				$this->load->view('pegawai/tambah', $data);
 				$this->load->view('templates/footer');
 			}else{
-				// echo "True cuk";
-				// die;
 				$this->User_model->tambahDataPegawai();				
-				$this->session->set_flashdata('message','<div class="alert alert-success alert-dismissible fade show mt-3" role="alert">Outlet telah ditambahkan! <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');	
+				$this->session->set_flashdata('message','<div class="alert alert-success alert-dismissible fade show mt-3" role="alert">Data pegawai telah ditambahkan! <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');	
 				redirect('pegawai');
 			}
 		}

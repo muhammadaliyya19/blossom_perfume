@@ -12,12 +12,17 @@
 			date_default_timezone_set("Asia/Jakarta");
 			$now = new DateTime();
 			$data = array(
+			"kode_petugas"	=> $this->input->post('kode_petugas', true),
+			"nik"			=> $this->input->post('nik', true),
 			"username" 		=> $this->input->post('username', true),
 			"password" 		=> $this->input->post('password', true),
 			"nama" 			=> $this->input->post('nama', true),
 			"jabatan"		=> $this->input->post('jabatan', true),
 			"id_outlet" 	=> $this->input->post('id_outlet', true),
 			"no_hp" 		=> $this->input->post('no_hp', true),
+			"ttl"	 		=> $this->input->post('ttl', true),
+			"kelamin" 		=> $this->input->post('kelamin', true),
+			"agama" 		=> $this->input->post('agama', true),
 			"alamat" 		=> $this->input->post('alamat', true),
 			"date_created" 	=> $now->format('Y-m-d H:i:s')
 			);
@@ -47,14 +52,18 @@
 			date_default_timezone_set("Asia/Jakarta");
 			$now = new DateTime();
 			$data = array(
+			"kode_petugas"	=> $this->input->post('kode_petugas', true),
+			"nik"			=> $this->input->post('nik', true),
 			"username" 		=> $this->input->post('username', true),
 			"password" 		=> $this->input->post('password', true),
 			"nama" 			=> $this->input->post('nama', true),
 			"jabatan"		=> $this->input->post('jabatan', true),
 			"id_outlet" 	=> $this->input->post('id_outlet', true),
 			"no_hp" 		=> $this->input->post('no_hp', true),
-			"alamat" 		=> $this->input->post('alamat', true),
-			"date_created" 	=> $now->format('Y-m-d H:i:s')
+			"ttl"	 		=> $this->input->post('ttl', true),
+			"kelamin" 		=> $this->input->post('kelamin', true),
+			"agama" 		=> $this->input->post('agama', true),
+			"alamat" 		=> $this->input->post('alamat', true)
 			);
 			$this->db->where('id', $this->input->post('id'));
 			$this->db->update('user', $data);

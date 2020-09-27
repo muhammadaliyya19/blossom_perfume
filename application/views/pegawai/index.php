@@ -7,6 +7,8 @@
       <a href="<?php echo base_url(); ?>pegawai/tambah" class="btn btn-primary">Tambah Pegawai</a>
     </div>    
   </div>    
+  <?php echo $this->session->flashdata('message'); ?>
+
     <!-- <?php if ($user['jabatan']=="Admin"):?> -->
     <!-- <div class="row">
       <div class="col">
